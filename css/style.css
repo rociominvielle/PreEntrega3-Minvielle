@@ -1,0 +1,25 @@
+* {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: sans-serif;
+}  
+
+ header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+    background-color: #8B94F9;
+ }
+
+ .hamburguesa-list {
+    list-style-type: none;
+    display: flex;
+    gap: 1rem;
+ }
+
+ .hamburguesa-list li a {
+    text-decoration: none;
+    color: black;
+ }
