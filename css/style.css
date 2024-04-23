@@ -23,3 +23,11 @@
     text-decoration: none;
     color: black;
  }
+
+ .card-text {
+   font-size: 25px;
+ }
+
+ #card-zona , #card-tiempo, #card-evento-elegido {
+   display: none;
+ }
