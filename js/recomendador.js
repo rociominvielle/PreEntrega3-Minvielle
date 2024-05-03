@@ -80,25 +80,20 @@ const dosButton = document.querySelector("#dos");
 const todoButton = document.querySelector("#todo");
 
 let tiempo;
+let evfinal;
 
 function selectTiempo(_tiempo) {
-  tiempo = _tiempo;
-  document.querySelector("#card-tiempo").style.display = "none";
-  console.log(genero, zona, tiempo);
-   const evfinal = listaDeEventos.find((ev) => tiempo == ev.duracion 
+    tiempo = _tiempo; 
+    document.querySelector("#card-tiempo").style.display = "none";
+    console.log(genero, zona, tiempo);
+    evfinal = listaDeEventos.find((ev) => tiempo == ev.duracion 
     && genero == ev.genero 
     && zona == ev.ubicacion)
-
+    
     if(evfinal != null){
         document.querySelector("#card-evento-elegido").style.display = "block";
         document.querySelector("#titulo-elegido").innerHTML = evfinal.titulo
     }
-        
-    //     // alert("Genial, tu evento deseado para el día de hoy es " + evfinal.titulo );}
-    // else{
-    //     // alert('Lo sentimos no tenemos ningún evento para ti hoy, vuelve mañana')
-    // }
-  
 }
 
 const enClickMicro = () => {
@@ -115,7 +110,6 @@ const enClickTodo = () => {
   selectTiempo("toma todo mi tiempo");
 };
 todoButton.addEventListener("click", enClickTodo);
-
 
 
 const listaDeEventos = [
@@ -154,13 +148,39 @@ const listaDeEventos = [
     new Evento('The Illusionists', 'alternativo', 'CABA SUR', 'toma todo mi tiempo'),
     new Evento('Potted Potter', 'alternativo', 'GBA', 'micro espectáculo'),
     new Evento('La Clique', 'alternativo', 'GBA', 'hasta 2hs'),
-    // new Evento('The House of Dancing Water', 'alternativo', 'GBA', 'toma todo mi tiempo')
+    new Evento('The House of Dancing Water', 'alternativo', 'GBA', 'toma todo mi tiempo')
 ];
 
+// <!-- Card Vas a ir a ver  -->
 
+const cambioButton = document.getElementById("btncambio");
+const comprarButton = document.querySelector("#btncomprar");
+const wishButton = document.querySelector("#btnwish");
 
-// const generoBoton = prompt('¿Para qué estás?, Elige una opción: comedia, drama, musical o alternativo')
-// const ubicacionPrompt = prompt('¿Dónde estás?, Elige una opción: CABA NORTE, CABA SUR, GBA')
-// const duracionPrompt = prompt('¿Cuánto tiempo tenés?, Elige una opción: micro espectáculo, hasta 2hs, toma todo mi tiempo')
+cambioButton.addEventListener("click", selectCambio)
 
-// const deseoUsuarioFinal = new DeseoUsuario (generoPrompt, ubicacionPrompt, duracionPrompt)
+function selectCambio() {
+    document.querySelector("#card-genero").style.display = "block";
+    document.querySelector("#card-evento-elegido").style.display = "none";
+}
+
+wishButton.addEventListener ("click", selectWish)
+let wishlist = JSON.parse(localStorage.getItem("wishlist")) || []  
+
+function selectWish () { 
+    let evfinal = listaDeEventos.find((ev) => ev.titulo === document.querySelector("#titulo-elegido").innerHTML);
+    if (!wishlist.find((item) => item.titulo === evfinal.titulo)) {
+        wishlist.push(evfinal);
+        localStorage.setItem("wishlist", JSON.stringify(wishlist));
+        console.log (wishlist);
+        Toastify({
+        text: 'Se agregó ' + evfinal.titulo + ' a tu wishlist',
+        duration: 3000
+    }).showToast();
+} else {
+    Toastify({
+        text: evfinal.titulo + ' ya está en tu wishlist',
+        duration: 3000
+    }).showToast();
+} 
+}
